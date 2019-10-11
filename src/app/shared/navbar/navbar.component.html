@@ -1,0 +1,11 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+  <div class="navbar-nav" *ngIf="loggedIn">
+    <a class="nav-item nav-link" routerLink="/">Home</a>
+    <a class="nav-item nav-link" (click)="logOut()">Log Out</a>
+    <a *ngIf="isHr(loggedInUser)" class="nav-item nav-link" routerLink="/register">Register</a>
+    <a class="nav-item nav-link" routerLink="/leaves">Leaves</a>
+    <a *ngIf="isHr(loggedInUser)" class="nav-item nav-link" routerLink="/users">Users</a>
+    <a *ngIf="isHr(loggedInUser) || isManager(loggedInUser)" class="nav-item nav-link" routerLink="/requests">Requests</a>
+
+  </div>
+</nav>

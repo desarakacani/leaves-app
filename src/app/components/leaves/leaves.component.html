@@ -1,0 +1,61 @@
+<h2>Leaves</h2>
+
+<button  class="btn btn-primary btn-sm " (click)="open(content)">Create Leaves</button>
+
+<div class="box-body" style="padding-top: 20px;">
+  <table class="table table-bordered table-hover  mt2">
+    <thead>
+    <tr>
+      <th>#ID</th>
+      <th>Day Off</th>
+      <th>Approved</th>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>Rejected Reasons</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let l of myLeaves">
+      <td>{{l.id}}</td>
+      <td>{{l.date.day}}/{{l.date.month}}/{{l.date.year}}</td>
+      <td>{{true == l.approved ? 'Yes' : 'No' }}</td>
+      <td>{{l.user.first_name}}</td>
+      <td>{{l.user.last_name}}</td>
+      <td>{{l.reason}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="leaveForm">
+      <div class="form-group">
+        <label for="dateOfBirth">Date of leave</label>
+        <div class="input-group">
+          <input id="dateOfBirth" formControlName="date" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="dateOfBirth">Reason</label>
+        <div class="input-group">
+          <input id="reason" formControlName="reason" class="form-control" placeholder="Reason" name="dp" type="text">
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="onSubmit()">Save</button>
+  </div>
+</ng-template>
+

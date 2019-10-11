@@ -1,0 +1,60 @@
+<div class="login-form">
+  <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+    <div class="avatar"><i class="material-icons">&#xE7FF;</i></div>
+    <h4 class="modal-title">Login to Your Account</h4>
+    <div class="form-group">
+      <input type="text" formControlName="first_name" class="form-control"
+             [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }"
+             placeholder="First Name">
+      <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback text-left">
+        <div *ngIf="f.first_name.errors.required">Name is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="text" formControlName="last_name" class="form-control"
+             [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }"
+             placeholder="Last Name">
+      <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback text-left">
+        <div *ngIf="f.last_name.errors.required">Name is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="text" formControlName="email" class="form-control"
+             [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+             placeholder="Email">
+      <div *ngIf="submitted && f.email.errors" class="invalid-feedback text-left">
+        <div *ngIf="f.email.errors.required">Name is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <select class="form-control" formControlName="role">
+        <option>Roles</option>
+        <option>User</option>
+        <option>Manager</option>
+        <option>HR</option>
+      </select>
+      <div *ngIf="submitted && f.email.errors" class="invalid-feedback text-left">
+        <div *ngIf="f.role.errors.required">Role is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <select class="form-control" formControlName="gender">
+        <option>Gender</option>
+        <option>Female</option>
+        <option>Male</option>
+      </select>
+      <div *ngIf="submitted && f.gender.errors" class="invalid-feedback text-left">
+        <div *ngIf="f.gender.errors.required">Role is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" formControlName="password" placeholder="Password" required="required">
+      <div *ngIf="submitted && f.password.errors" class="invalid-feedback text-left">
+        <div *ngIf="f.password.errors.required">Role is required</div>
+      </div>
+    </div>
+
+    <input type="submit" class="btn btn-primary btn-block btn-lg" aria-hidden="true" value="Register">
+  </form>
+
+</div>
