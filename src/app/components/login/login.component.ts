@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../services/authentication.service';
 import {LoginBody} from '../../models/login-body';
 import {LeavesService} from '../../services/leaves.service';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router,
               private formBuilder: FormBuilder,
-              private authService: AuthenticationService) {
+              private authService: AuthenticationService,
+              private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -39,12 +41,10 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginBody).subscribe(data => {
       if (data.length > 0) {
         localStorage.setItem('user', JSON.stringify(data[0]));
-        setTimeout(() => {
-          this.router.navigate(['/']);
-        }, 200);
-
+        this.authService.setNextValue(true);
+        this.router.navigate(['/home']);
       } else {
-        console.log('bad cred');
+        this.toastr.error('Bad credentials');
       }
     });
   }
