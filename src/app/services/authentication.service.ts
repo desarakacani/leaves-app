@@ -48,4 +48,8 @@ export class AuthenticationService {
       return  JSON.parse(localStorage.getItem('user'));
     }
   }
+
+  setNextValue(nextValue: boolean) {
+    this.loggedIn.next(nextValue);
+  }
 }
