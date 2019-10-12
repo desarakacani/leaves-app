@@ -8,17 +8,19 @@ import {RequestsComponent} from './components/requests/requests.component';
 import {AuthGuard} from './guards/auth.guard';
 import {HrGuard} from './guards/hr.guard';
 import {AppComponent} from './app.component';
+import {HomeComponent} from './components/home/home.component';
 
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent, canActivate: [AuthGuard]},
+  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'leaves', component: LeavesComponent, canActivate: [AuthGuard]},
   {path: 'users', component: UsersComponent, canActivate: [AuthGuard]},
   {path: 'requests', component: RequestsComponent, canActivate: [AuthGuard, HrGuard]},
 
   // otherwise redirect to home
-  {path: '**', redirectTo: '/'}
+  {path: '', redirectTo: '/home', pathMatch: 'full'},
 ];
 
 @NgModule({
