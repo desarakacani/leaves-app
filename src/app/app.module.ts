@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { UsersComponent } from './components/users/users.component';
-import { RegisterComponent } from './components/register/register.component';
 import { LeavesComponent } from './components/leaves/leaves.component';
 import { RequestsComponent } from './components/requests/requests.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -21,7 +20,6 @@ import { HomeComponent } from './components/home/home.component';
     AppComponent,
     LoginComponent,
     UsersComponent,
-    RegisterComponent,
     LeavesComponent,
     RequestsComponent,
     NavbarComponent,
