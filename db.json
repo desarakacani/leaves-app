@@ -7,7 +7,7 @@
       "email": "kacani.desara@gmail.com",
       "password": "test",
       "gender": "Female",
-      "role": "user"
+      "role": "User"
     },
     {
       "id": 2,
@@ -25,49 +25,9 @@
       "email": "manager@gmail.com",
       "password": "test",
       "gender": "Male",
-      "role": "manager"
+      "role": "Manager"
     }
   ],
   "leaves": [
-    {
-      "date": {
-        "year": 2019,
-        "month": 10,
-        "day": 26
-      },
-      "reason": "Sick",
-      "approved": false,
-      "fullyApproved": false,
-      "user": {
-        "id": 1,
-        "first_name": "Desara",
-        "last_name": "Kacani",
-        "email": "kacani.desara@gmail.com",
-        "password": "test",
-        "gender": "Female",
-        "role": "user"
-      },
-      "id": 1
-    },
-    {
-      "date": {
-        "year": 2019,
-        "month": 10,
-        "day": 27
-      },
-      "reason": "holiday",
-      "approved": false,
-      "fullyApproved": false,
-      "user": {
-        "id": 1,
-        "first_name": "Desara",
-        "last_name": "Kacani",
-        "email": "kacani.desara@gmail.com",
-        "password": "test",
-        "gender": "Female",
-        "role": "user"
-      },
-      "id": 2
-    }
   ]
 }
