@@ -5,22 +5,28 @@
     <thead>
     <tr>
       <th>#ID</th>
-      <th>Day Off</th>
+      <th>From Date</th>
+      <th>To Date</th>
       <th>Approved</th>
       <th>First name</th>
       <th>Last name</th>
-      <th>Action</th>
+      <th style="text-align: center" colspan="2">Action</th>
     </tr>
     </thead>
     <tbody>
 
     <tr *ngFor="let req of userRequests">
       <td>{{req.id}}</td>
-      <td>{{req.date.day}}/{{req.date.month}}/{{req.date.year}}</td>
-      <td>{{true == req.approved ? 'Yes' : 'No' }}</td>
+      <td>{{req.fromDate.day}}/{{req.fromDate.month}}/{{req.fromDate.year}}</td>
+      <td>{{req.toDate.day}}/{{req.toDate.month}}/{{req.toDate.year}}</td>
+      <td *ngIf="isManager()">{{true == req.approved ? 'Yes' : 'No' }}</td>
+      <td *ngIf="isHr()">{{true == req.fullyApproved ? 'Yes' : 'No' }}</td>
       <td>{{req.user.first_name}}</td>
       <td>{{req.user.last_name}}</td>
-      <td><button class="btn btn-success" (click)="approve(req)">Approve</button>
+      <td>
+        <button class="btn btn-success" (click)="approve(req)">Approve</button>
+      </td>
+      <td>
         <button class="btn btn-danger" (click)="reject(req)">Reject</button>
       </td>
     </tr>

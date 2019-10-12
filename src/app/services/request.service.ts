@@ -15,4 +15,8 @@ export class RequestService {
   getUserRequest(): Observable<Leave[]> {
     return this.httpClient.get<Leave[]>(`${environment.baseUrl}/leaves`);
   }
+
+  getApprovedUserRequest(): Observable<Leave[]> {
+    return this.httpClient.get<Leave[]>(`${environment.baseUrl}/leaves?approved=true`);
+  }
 }
