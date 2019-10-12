@@ -1,13 +1,14 @@
 <h2>Leaves</h2>
 
-<button  class="btn btn-primary btn-sm " (click)="open(content)">Create Leaves</button>
+<button class="btn btn-primary btn-sm " (click)="open(content)">Create Leaves</button>
 
 <div class="box-body" style="padding-top: 20px;">
   <table class="table table-bordered table-hover  mt2">
     <thead>
     <tr>
       <th>#ID</th>
-      <th>Day Off</th>
+      <th>From Date</th>
+      <th>To Date</th>
       <th>Approved</th>
       <th>First name</th>
       <th>Last name</th>
@@ -17,7 +18,8 @@
     <tbody>
     <tr *ngFor="let l of myLeaves">
       <td>{{l.id}}</td>
-      <td>{{l.date.day}}/{{l.date.month}}/{{l.date.year}}</td>
+      <td>{{l.fromDate.day}}/{{l.fromDate.month}}/{{l.fromDate.year}}</td>
+      <td>{{l.toDate.day}}/{{l.toDate.month}}/{{l.toDate.year}}</td>
       <td>{{true == l.approved ? 'Yes' : 'No' }}</td>
       <td>{{l.user.first_name}}</td>
       <td>{{l.user.last_name}}</td>
@@ -37,18 +39,59 @@
   <div class="modal-body">
     <form [formGroup]="leaveForm">
       <div class="form-group">
-        <label for="dateOfBirth">Date of leave</label>
+        <label for="fromDate">From Date</label>
         <div class="input-group">
-          <input id="dateOfBirth" formControlName="date" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+          <input id="fromDate" formControlName="fromDate" class="form-control"
+                 [ngClass]="{ 'is-invalid': (submitted && f.fromDate.errors) || (submitted && leaveForm.hasError('dateError'))}"
+                 placeholder="yyyy-mm-dd" name="dp" [minDate]="minDate"
+                 ngbDatepicker #fromDp="ngbDatepicker">
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+            <button class="btn btn-outline-secondary calendar" (click)="fromDp.toggle()" type="button"></button>
+          </div>
+
+          <div *ngIf="submitted && f.fromDate.errors" class="invalid-feedback text-left">
+            <div *ngIf="f.fromDate.errors.required">From date is required</div>
+          </div>
+
+          <div *ngIf="submitted && leaveForm.hasError('dateError')" class="invalid-feedback text-left">
+            <div *ngIf="leaveForm.getError('dateError')">From date is after to date</div>
           </div>
         </div>
+
+
       </div>
+
       <div class="form-group">
-        <label for="dateOfBirth">Reason</label>
+        <label for="toDate">To Date</label>
         <div class="input-group">
-          <input id="reason" formControlName="reason" class="form-control" placeholder="Reason" name="dp" type="text">
+          <input id="toDate" formControlName="toDate" class="form-control"
+                 [ngClass]="{ 'is-invalid': (submitted && f.toDate.errors) || (submitted && leaveForm.hasError('dateError'))}"
+                 placeholder="yyyy-mm-dd" name="dp" [minDate]="minDate"
+                 ngbDatepicker #toDp="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="toDp.toggle()" type="button"></button>
+          </div>
+
+          <div *ngIf="submitted && f.toDate.errors" class="invalid-feedback text-left">
+            <div *ngIf="f.toDate.errors.required">From date is required</div>
+          </div>
+
+          <div *ngIf="submitted && leaveForm.hasError('dateError')" class="invalid-feedback text-left">
+            <div *ngIf="leaveForm.getError('dateError')">To date is before from date</div>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="form-group">
+        <label for="reason">Reason</label>
+        <div class="input-group">
+          <input id="reason" formControlName="reason" [ngClass]="{ 'is-invalid': submitted && f.reason.errors }"
+                 class="form-control" placeholder="Reason" name="dp" type="text">
+          <div *ngIf="submitted && f.reason.errors" class="invalid-feedback text-left">
+            <div *ngIf="f.reason.errors.required">From date is required</div>
+          </div>
         </div>
       </div>
 

@@ -13,8 +13,8 @@ export class LeavesService {
   constructor(private httpClient: HttpClient) {
   }
 
-  addLeave(leave: Leave) {
-    return this.httpClient.post(`${environment.baseUrl}/leaves`, leave);
+  addLeave(leave: Leave): Observable<Leave> {
+    return this.httpClient.post<Leave>(`${environment.baseUrl}/leaves`, leave);
   }
 
   getLeaves(user: User): Observable<Leave[]> {
