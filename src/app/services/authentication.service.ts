@@ -3,7 +3,6 @@ import {Observable, of, Subject} from 'rxjs';
 import {environment} from '../../environments/environment';
 import {Router} from '@angular/router';
 import {LoginBody} from '../models/login-body';
-import {BackendService} from './backend.service';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../models/user';
 
@@ -15,13 +14,9 @@ export class AuthenticationService {
   private loggedIn = new Subject<boolean>();
 
   constructor(private router: Router,
-              private backend: BackendService,
               private httpClient: HttpClient) {
   }
 
-  addUser(user: User): Observable<User> {
-    return this.httpClient.post<User>(`${environment.baseUrl}/users`, user);
-  }
 
   login(loginBody: LoginBody): Observable<User[]> {
     return this.httpClient.get<User[]>(`${environment.baseUrl}/users?email=${loginBody.username}&password=${loginBody.password}`);
