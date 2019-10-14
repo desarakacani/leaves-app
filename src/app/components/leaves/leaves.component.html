@@ -1,32 +1,46 @@
-<h2>Leaves</h2>
+<h2 class="title-txt">Leaves</h2>
 
 <button class="btn btn-primary btn-sm " (click)="open(content)">Create Leaves</button>
 
-<div class="box-body" style="padding-top: 20px;">
+<div class=" box-body pt20">
   <table class="table table-bordered table-hover  mt2">
     <thead>
     <tr>
-      <th>#ID</th>
       <th>From Date</th>
       <th>To Date</th>
-      <th>Approved</th>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>Rejected Reasons</th>
+      <th>Approved by Manager</th>
+      <th>Approved by HR</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Remaining Days</th>
+      <th>Leave Reason</th>
+      <th>Rejected Reason</th>
+      <th colspan="2">Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let l of myLeaves">
-      <td>{{l.id}}</td>
       <td>{{l.fromDate.day}}/{{l.fromDate.month}}/{{l.fromDate.year}}</td>
       <td>{{l.toDate.day}}/{{l.toDate.month}}/{{l.toDate.year}}</td>
       <td>{{true == l.approved ? 'Yes' : 'No' }}</td>
-      <td>{{l.user.first_name}}</td>
-      <td>{{l.user.last_name}}</td>
+      <td>{{true == l.fullyApproved ? 'Yes' : 'No' }}</td>
+      <td>{{l.user.first_name}} {{l.user.last_name}}</td>
+      <td>{{l.user.email}}</td>
+      <td>{{remainingDays}}</td>
       <td>{{l.reason}}</td>
+      <td>{{l.reject_reason}}</td>
+      <td>
+        <button *ngIf="!l.approved" class="btn btn-sm btn-success" (click)="edit(l, content)">Edit</button>
+      </td>
+      <td>
+        <button *ngIf="!l.approved" class="btn btn-sm btn-danger" (click)="delete(l)">Delete</button>
+      </td>
     </tr>
     </tbody>
   </table>
+
+  <p class="remaining-txt">You have {{remainingDays}} remaining days.</p>
+
 </div>
 
 <ng-template #content let-modal>
@@ -90,7 +104,7 @@
           <input id="reason" formControlName="reason" [ngClass]="{ 'is-invalid': submitted && f.reason.errors }"
                  class="form-control" placeholder="Reason" name="dp" type="text">
           <div *ngIf="submitted && f.reason.errors" class="invalid-feedback text-left">
-            <div *ngIf="f.reason.errors.required">From date is required</div>
+            <div *ngIf="f.reason.errors.required">Reason is required</div>
           </div>
         </div>
       </div>
@@ -98,7 +112,8 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="onSubmit()">Save</button>
+    <button *ngIf="selectedLeaveToEdit === null" type="button" class="btn btn-outline-dark" (click)="onSubmit()">Save</button>
+    <button *ngIf="selectedLeaveToEdit !== null" type="button" class="btn btn-outline-dark" (click)="update()">Update</button>
   </div>
 </ng-template>
 

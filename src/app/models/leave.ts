@@ -9,5 +9,7 @@ export interface Leave {
   toDate: NgbDate;
   approved: boolean;
   fullyApproved: boolean;
+  rejected: boolean;
+  reject_reason: string;
   user: User;
 }

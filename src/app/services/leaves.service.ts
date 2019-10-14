@@ -25,4 +25,8 @@ export class LeavesService {
     return this.httpClient.patch(`${environment.baseUrl}/leaves/${leave.id}`, leave);
   }
 
+  delete(leave: Leave) {
+    return this.httpClient.delete(`${environment.baseUrl}/leaves/${leave.id}`);
+  }
+
 }
