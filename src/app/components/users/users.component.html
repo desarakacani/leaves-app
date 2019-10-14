@@ -1,26 +1,105 @@
-<h2>Users</h2>
+<h2 class="title-txt">Users</h2>
 
-<a routerLink="/register" class="btn btn-primary btn-sm ">Create User</a>
+<button class="btn btn-primary btn-sm " (click)="open(content)">Add User</button>
 
 <div class="box-body" style="padding-top: 20px;">
   <table class="table table-bordered table-hover  mt2">
     <thead>
     <tr>
-      <th>#ID</th>
-      <th>First Name</th>
-      <th>Last Name</th>
+      <th>Name</th>
+      <th>Email</th>
       <th>Gender</th>
       <th>Role</th>
+      <th>Edit</th>
+      <th>Delete</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let user of users">
-      <td>{{user.id}}</td>
-      <td>{{user.first_name}}</td>
-      <td>{{user.last_name}}</td>
+      <td>{{user.first_name}} {{user.last_name}}</td>
+      <td>{{user.email}}</td>
       <td>{{user.gender}}</td>
       <td>{{user.role}}</td>
+      <td>
+        <button class="btn btn-sm btn-success" (click)="edit(user, content)">Edit</button>
+      </td>
+      <td>
+        <button class="btn btn-sm btn-danger" (click)="delete(user)">Delete</button>
+      </td>
     </tr>
     </tbody>
   </table>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add User</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="userForm">
+      <div class="form-group">
+        <input type="text" formControlName="first_name" class="form-control"
+               [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }"
+               placeholder="First Name" autocomplete="off">
+        <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback text-left">
+          <div *ngIf="f.first_name.errors.required">First name is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="text" formControlName="last_name" class="form-control"
+               [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }"
+               placeholder="Last Name">
+        <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback text-left">
+          <div *ngIf="f.last_name.errors.required">Last name is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="text" formControlName="email" class="form-control"
+               [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+               placeholder="Email">
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback text-left">
+          <div *ngIf="f.email.errors.required">Email is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <select class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.role.errors }"
+                formControlName="role">
+          <option [ngValue]="null">Select Role</option>
+          <option *ngFor="let role of roles" [ngValue]="role">{{role}}</option>
+
+        </select>
+        <div *ngIf="submitted && f.role.errors" class="invalid-feedback text-left">
+          <div *ngIf="f.role.errors.required">Role is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <select class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.gender.errors }"
+                formControlName="gender">
+          <option [ngValue]="null">Select Gender</option>
+          <option value="Female">Female</option>
+          <option value="Male">Male</option>
+        </select>
+        <div *ngIf="submitted && f.gender.errors" class="invalid-feedback text-left">
+          <div *ngIf="f.gender.errors.required">Gender is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control"
+               [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+               formControlName="password" placeholder="Password">
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback text-left">
+          <div *ngIf="f.password.errors.required">Password is required</div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button *ngIf="selectedUserToEdit === null" type="button" class="btn btn-outline-dark" (click)="onSubmit()">Save</button>
+    <button *ngIf="selectedUserToEdit !== null" type="button" class="btn btn-outline-dark" (click)="update()">Update</button>
+  </div>
+</ng-template>
