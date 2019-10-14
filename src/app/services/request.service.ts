@@ -13,10 +13,10 @@ export class RequestService {
   constructor(private httpClient: HttpClient) { }
 
   getUserRequest(): Observable<Leave[]> {
-    return this.httpClient.get<Leave[]>(`${environment.baseUrl}/leaves`);
+    return this.httpClient.get<Leave[]>(`${environment.baseUrl}/leaves?approved=false`);
   }
 
   getApprovedUserRequest(): Observable<Leave[]> {
-    return this.httpClient.get<Leave[]>(`${environment.baseUrl}/leaves?approved=true`);
+    return this.httpClient.get<Leave[]>(`${environment.baseUrl}/leaves?approved=true&fullyApproved=false`);
   }
 }

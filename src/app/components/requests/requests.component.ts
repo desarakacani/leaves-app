@@ -7,6 +7,7 @@ import {User} from '../../models/user';
 import {RoleEnum} from '../../util/role.enum';
 import {AuthenticationService} from '../../services/authentication.service';
 import {isHr, isManager} from '../../util/utils';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-requests',
@@ -16,12 +17,17 @@ import {isHr, isManager} from '../../util/utils';
 export class RequestsComponent implements OnInit {
 
   private userRequests: Leave[];
+  closeResult: string;
   loggedInUser: User;
+  rejectReason = '';
+
+  selectedRequestForRejection: Leave;
 
   constructor(private requestService: RequestService,
               private leaveService: LeavesService,
               private toastr: ToastrService,
-              private authService: AuthenticationService) {
+              private authService: AuthenticationService,
+              private modalService: NgbModal) {
   }
 
   ngOnInit() {
@@ -50,18 +56,27 @@ export class RequestsComponent implements OnInit {
     }
 
     this.leaveService.updateLeave(leave).subscribe(_ => {
-      this.toastr.success('Request Approved!', 'Success');
+      const sentToHR = isManager(this.loggedInUser) ? 'Sent to HR!' : '';
+      this.toastr.success('Request Approved! ' + sentToHR, 'Success');
+      if (this.loggedInUser.role === RoleEnum.MANAGER) {
+        this.requestService.getUserRequest().subscribe(requests => {
+          this.userRequests = requests;
+        });
+      } else {
+        this.requestService.getApprovedUserRequest().subscribe(requests => {
+          this.userRequests = requests;
+        });
+      }
     });
   }
 
-  reject(leave: Leave) {
-    leave.fullyApproved = false;
-    leave.approved = false;
-    this.leaveService.updateLeave(leave).subscribe(_ => {
+  reject() {
+    this.selectedRequestForRejection.fullyApproved = false;
+    this.selectedRequestForRejection.rejected = true;
+    this.selectedRequestForRejection.reject_reason = this.rejectReason;
+    this.leaveService.updateLeave(this.selectedRequestForRejection).subscribe(_ => {
         this.toastr.error('Request Rejected!');
-      },
-      error => {
-
+        this.modalService.dismissAll();
       });
   }
 
@@ -71,5 +86,15 @@ export class RequestsComponent implements OnInit {
 
   isHr() {
     return isHr(this.loggedInUser);
+  }
+
+  open(content, req: Leave) {
+    this.selectedRequestForRejection = req;
+    this.rejectReason = '';
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
   }
 }

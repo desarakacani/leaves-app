@@ -1,33 +1,41 @@
-<h2>Requests</h2>
+<h2 class="title-txt">Requests</h2>
+<p  *ngIf="isHr()" class="request-txt">
+  The list of accepted request from manager! Requires the approve from HR too!
+</p>
 
-<div class="box-body" style="padding-top: 20px !important;">
+<p  *ngIf="isManager()" class="request-txt">
+   List of user leave requests! Waiting for approval!
+</p>
+
+<div class="box-body">
   <table class="table table-bordered table-hover  mt2">
     <thead>
     <tr>
-      <th>#ID</th>
       <th>From Date</th>
       <th>To Date</th>
-      <th>Approved</th>
-      <th>First name</th>
-      <th>Last name</th>
+      <th>Approved <span *ngIf="isHr()">from Manager</span></th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Request Reason</th>
+      <th>Rejected Reason</th>
       <th style="text-align: center" colspan="2">Action</th>
     </tr>
     </thead>
     <tbody>
 
     <tr *ngFor="let req of userRequests">
-      <td>{{req.id}}</td>
       <td>{{req.fromDate.day}}/{{req.fromDate.month}}/{{req.fromDate.year}}</td>
       <td>{{req.toDate.day}}/{{req.toDate.month}}/{{req.toDate.year}}</td>
-      <td *ngIf="isManager()">{{true == req.approved ? 'Yes' : 'No' }}</td>
-      <td *ngIf="isHr()">{{true == req.fullyApproved ? 'Yes' : 'No' }}</td>
-      <td>{{req.user.first_name}}</td>
-      <td>{{req.user.last_name}}</td>
+      <td>{{true == req.approved ? 'Yes' : 'No' }}</td>
+      <td>{{req.user.first_name}} {{req.user.last_name}}</td>
+      <td>{{req.user.email}}</td>
+      <td>{{req.reason}}</td>
+      <td>{{req.reject_reason}}</td>
       <td>
         <button class="btn btn-success" (click)="approve(req)">Approve</button>
       </td>
       <td>
-        <button class="btn btn-danger" (click)="reject(req)">Reject</button>
+        <button class="btn btn-danger" (click)="open(content,req)">Reject</button>
       </td>
     </tr>
 
@@ -35,3 +43,24 @@
     </tbody>
   </table>
 </div>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Reject Reason</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <div class="form-group">
+        <label for="dateOfBirth">Reason</label>
+        <div class="input-group">
+          <input id="dateOfBirth" class="form-control" type="text" [(ngModel)]="rejectReason">
+        </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="reject()">Save</button>
+  </div>
+</ng-template>
