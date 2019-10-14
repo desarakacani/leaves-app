@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../services/authentication.service';
 import {User} from '../../models/user';
-import {isHr} from '../../util/utils';
+import {isHr, isUser} from '../../util/utils';
 import {isManager} from '../../util/utils';
 
 
@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
 
-    if(this.loggedIn) {
+    if (this.loggedIn) {
       this.loggedInUser = this.authService.getLoggedInUser();
     }
 
@@ -41,5 +41,9 @@ export class NavbarComponent implements OnInit {
 
   isManager(loggedInUser: User) {
     return isManager(loggedInUser);
+  }
+
+  isUser(loggedInUser: User) {
+    return isUser(loggedInUser);
   }
 }

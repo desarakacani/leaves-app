@@ -3,8 +3,7 @@ import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../services/authentication.service';
 import {LoginBody} from '../../models/login-body';
-import {LeavesService} from '../../services/leaves.service';
-import {ToastrService} from "ngx-toastr";
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -38,9 +37,10 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.loginBody = Object.assign({}, this.loginForm.value);
-    this.authService.login(this.loginBody).subscribe(data => {
-      if (data.length > 0) {
-        localStorage.setItem('user', JSON.stringify(data[0]));
+    this.authService.login(this.loginBody).subscribe(users => {
+      if (users.length === 1) {
+        const loggedInUser = users[0];
+        localStorage.setItem('user', JSON.stringify(loggedInUser));
         this.authService.setNextValue(true);
         this.router.navigate(['/home']);
       } else {

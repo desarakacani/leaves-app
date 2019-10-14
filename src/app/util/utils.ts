@@ -7,3 +7,7 @@ export const isHr = (user: User) => {
 export const isManager = (user: User) => {
   return user.role === RoleEnum.MANAGER;
 }
+
+export const isUser = (user: User) => {
+  return user.role === RoleEnum.USER;
+}
