@@ -1,15 +1,15 @@
-<h2 class="title-txt">Requests</h2>
-<p  *ngIf="isHr()" class="request-txt">
-  The list of accepted request from manager! Requires the approve from HR too!
+<h2 class="title-txt pt20">Requests List</h2>
+<p *ngIf="isHr()" class="request-txt">
+  The list of accepted request from manager! Waiting for approval!
 </p>
 
-<p  *ngIf="isManager()" class="request-txt">
+<p *ngIf="isManager()" class="request-txt">
    List of user leave requests! Waiting for approval!
 </p>
 
-<div class="box-body">
-  <table class="table table-bordered table-hover  mt2">
-    <thead>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead class="thead-dark">
     <tr>
       <th>From Date</th>
       <th>To Date</th>
@@ -18,7 +18,7 @@
       <th>Email</th>
       <th>Request Reason</th>
       <th>Rejected Reason</th>
-      <th style="text-align: center" colspan="2">Action</th>
+      <th class="text-center" colspan="2">Action</th>
     </tr>
     </thead>
     <tbody>
@@ -32,22 +32,21 @@
       <td>{{req.reason}}</td>
       <td>{{req.reject_reason}}</td>
       <td>
-        <button class="btn btn-success" (click)="approve(req)">Approve</button>
+        <button class="btn btn-success" [disabled]="req.reject_reason" (click)="approve(req)">Approve</button>
       </td>
       <td>
-        <button class="btn btn-danger" (click)="open(content,req)">Reject</button>
+        <button class="btn btn-danger" [disabled]="req.reject_reason" (click)="open(content,req)">Reject</button>
       </td>
     </tr>
 
-
     </tbody>
   </table>
-</div>
 
+</div>
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Reject Reason</h4>
+    <h4 class="modal-title title-txt" id="modal-basic-title">Reject Reason</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>

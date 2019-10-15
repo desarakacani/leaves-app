@@ -45,7 +45,6 @@ export class RequestsComponent implements OnInit {
     }
   }
 
-
   approve(leave: Leave) {
 
     if (this.isManager()) {

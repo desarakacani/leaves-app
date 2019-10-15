@@ -92,7 +92,7 @@ export class LeavesComponent implements OnInit {
     this.leaveService.addLeave(this.leave).subscribe(addedLeave => {
       this.submitted = false;
       this.modalService.dismissAll();
-      this.toastr.success('Added with success!', 'Success');
+      this.toastr.success('Leave added with success!', 'Success');
       this.myLeaves.push(addedLeave);
     });
 
@@ -147,7 +147,7 @@ export class LeavesComponent implements OnInit {
     this.selectedLeaveToEdit.reason = this.leaveForm.get('reason').value;
     this.leaveService.updateLeave(this.selectedLeaveToEdit).subscribe(_ => {
       this.modalService.dismissAll();
-      this.toastr.success('updated successfully');
+      this.toastr.success('Leave updated successfully!');
     });
   }
 }

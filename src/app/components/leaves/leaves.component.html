@@ -1,10 +1,8 @@
-<h2 class="title-txt">Leaves</h2>
-
-<button class="btn btn-primary btn-sm " (click)="open(content)">Create Leaves</button>
-
-<div class=" box-body pt20">
-  <table class="table table-bordered table-hover  mt2">
-    <thead>
+<h2 class="title-txt pt20">Leaves List</h2>
+<button class="btn btn-primary btn-sm bt-create mb20" (click)="open(content)">Create Leaves</button>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead class="thead-dark">
     <tr>
       <th>From Date</th>
       <th>To Date</th>
@@ -22,30 +20,41 @@
     <tr *ngFor="let l of myLeaves">
       <td>{{l.fromDate.day}}/{{l.fromDate.month}}/{{l.fromDate.year}}</td>
       <td>{{l.toDate.day}}/{{l.toDate.month}}/{{l.toDate.year}}</td>
-      <td>{{true == l.approved ? 'Yes' : 'No' }}</td>
-      <td>{{true == l.fullyApproved ? 'Yes' : 'No' }}</td>
+      <td
+        [ngClass]="{
+            'green' : l.approved,
+            'red' : !l.approved && l.reject_reason
+         }"
+      >{{true == l.approved ? 'Yes' : 'No' }}</td>
+      <td
+        [ngClass]="{
+            'green' : l.fullyApproved,
+            'red' : !l.fullyApproved && l.reject_reason
+         }"
+      >{{true == l.fullyApproved ? 'Yes' : 'No' }}</td>
       <td>{{l.user.first_name}} {{l.user.last_name}}</td>
       <td>{{l.user.email}}</td>
       <td>{{remainingDays}}</td>
       <td>{{l.reason}}</td>
       <td>{{l.reject_reason}}</td>
       <td>
-        <button *ngIf="!l.approved" class="btn btn-sm btn-success" (click)="edit(l, content)">Edit</button>
+        <button *ngIf="!l.approved && !l.reject_reason" class="btn btn-sm btn-success" (click)="edit(l, content)">Edit
+        </button>
       </td>
       <td>
-        <button *ngIf="!l.approved" class="btn btn-sm btn-danger" (click)="delete(l)">Delete</button>
+        <button *ngIf="!l.approved  && !l.reject_reason" class="btn btn-sm btn-danger" (click)="delete(l)">Delete
+        </button>
       </td>
     </tr>
     </tbody>
   </table>
-
-  <p class="remaining-txt">You have {{remainingDays}} remaining days.</p>
-
 </div>
+
+<p class="remaining-txt">You have {{remainingDays}} remaining days.</p>
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <h4 class="modal-title title-txt" id="modal-basic-title">Leave</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -66,13 +75,10 @@
           <div *ngIf="submitted && f.fromDate.errors" class="invalid-feedback text-left">
             <div *ngIf="f.fromDate.errors.required">From date is required</div>
           </div>
-
           <div *ngIf="submitted && leaveForm.hasError('dateError')" class="invalid-feedback text-left">
             <div *ngIf="leaveForm.getError('dateError')">From date is after to date</div>
           </div>
         </div>
-
-
       </div>
 
       <div class="form-group">
@@ -95,7 +101,6 @@
           </div>
         </div>
 
-
       </div>
 
       <div class="form-group">
@@ -112,8 +117,10 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button *ngIf="selectedLeaveToEdit === null" type="button" class="btn btn-outline-dark" (click)="onSubmit()">Save</button>
-    <button *ngIf="selectedLeaveToEdit !== null" type="button" class="btn btn-outline-dark" (click)="update()">Update</button>
+    <button *ngIf="selectedLeaveToEdit === null" type="button" class="btn btn-outline-dark" (click)="onSubmit()">Save
+    </button>
+    <button *ngIf="selectedLeaveToEdit !== null" type="button" class="btn btn-outline-dark" (click)="update()">Update
+    </button>
   </div>
 </ng-template>
 
