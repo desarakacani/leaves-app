@@ -2,17 +2,17 @@
   "users": [
     {
       "id": 1,
-      "first_name": "Desara",
-      "last_name": "Kacani",
-      "email": "kacani.desara@gmail.com",
+      "first_name": "User",
+      "last_name": "User",
+      "email": "user@gmail.com",
       "password": "test",
       "gender": "Female",
       "role": "User"
     },
     {
       "id": 2,
-      "first_name": "hr",
-      "last_name": "hr",
+      "first_name": "Hr",
+      "last_name": "Hr",
       "email": "hr@gmail.com",
       "password": "test",
       "gender": "Female",
@@ -20,8 +20,8 @@
     },
     {
       "id": 3,
-      "first_name": "manager",
-      "last_name": "manager",
+      "first_name": "Manager",
+      "last_name": "Manager",
       "email": "manager@gmail.com",
       "password": "test",
       "gender": "Male",
