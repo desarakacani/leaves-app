@@ -19,6 +19,10 @@ export class UserService {
     return this.httpClient.get<User[]>(`${environment.baseUrl}/users`);
   }
 
+  getUser(id): Observable<User> {
+    return this.httpClient.get<User>(`${environment.baseUrl}/users/${id}`);
+  }
+
   updateUser(user: User) {
     return this.httpClient.patch(`${environment.baseUrl}/users/${user.id}`, user);
   }

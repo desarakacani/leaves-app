@@ -61,7 +61,7 @@ export class UsersComponent implements OnInit {
     this.userService.addUser(this.user).subscribe(addedUser => {
       this.submitted = false;
       this.modalService.dismissAll();
-      this.toastr.success('Added with success!', 'Success');
+      this.toastr.success('User added with success!', 'Success');
       this.users.push(addedUser as User);
     });
   }
@@ -97,13 +97,13 @@ export class UsersComponent implements OnInit {
     this.selectedUserToEdit.password = this.userForm.get('password').value;
     this.userService.updateUser(this.selectedUserToEdit).subscribe(_ => {
       this.modalService.dismissAll();
-      this.toastr.success('updated successfully');
+      this.toastr.success('User updated successfully!');
     });
   }
 
   delete(user: User) {
     this.userService.delete(user).subscribe(_ => {
-      this.toastr.success('User deleted with success!');
+      this.toastr.success('User deleted successfully!');
       const index = this.users.indexOf(user);
       this.users.splice(index, 1);
     });

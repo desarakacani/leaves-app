@@ -1,39 +1,37 @@
-<h2 class="title-txt">Users</h2>
-
-<button class="btn btn-primary btn-sm " (click)="open(content)">Add User</button>
-
-<div class="box-body" style="padding-top: 20px;">
-  <table class="table table-bordered table-hover  mt2">
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Gender</th>
-      <th>Role</th>
-      <th>Edit</th>
-      <th>Delete</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let user of users">
-      <td>{{user.first_name}} {{user.last_name}}</td>
-      <td>{{user.email}}</td>
-      <td>{{user.gender}}</td>
-      <td>{{user.role}}</td>
-      <td>
-        <button class="btn btn-sm btn-success" (click)="edit(user, content)">Edit</button>
-      </td>
-      <td>
-        <button class="btn btn-sm btn-danger" (click)="delete(user)">Delete</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+<h2 class="title-txt pt20">Users List</h2>
+<button class="btn btn-primary btn-sm bt-create mb20" (click)="open(content)">Add User</button>
+<div class="table-responsive">
+  <table class="table table-striped">
+  <thead class="thead-dark">
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Gender</th>
+    <th>Role</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of users">
+    <td>{{user.first_name}} {{user.last_name}}</td>
+    <td>{{user.email}}</td>
+    <td>{{user.gender}}</td>
+    <td>{{user.role}}</td>
+    <td>
+      <button class="btn btn-sm btn-success" (click)="edit(user, content)">Edit</button>
+    </td>
+    <td>
+      <button class="btn btn-sm btn-danger" (click)="delete(user)">Delete</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
 </div>
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Add User</h4>
+    <h4 class="modal-title title-txt" id="modal-basic-title">User</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -43,7 +41,7 @@
       <div class="form-group">
         <input type="text" formControlName="first_name" class="form-control"
                [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }"
-               placeholder="First Name" autocomplete="off">
+               placeholder="First Name">
         <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback text-left">
           <div *ngIf="f.first_name.errors.required">First name is required</div>
         </div>
