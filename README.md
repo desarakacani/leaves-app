@@ -11,6 +11,14 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 json-server --watch db.json
 
+## Login credentials according user roles
+
+Email: user@gmail.com Password: test
+
+Email: hr@gmail.com Password: test
+
+Email: manager@gmail.com Password: test
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
